@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEAS Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-emoji">🤖</span>
+                <h1>DEAS</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active" data-tab="chats"><i class="fas fa-comments"></i> 실시간 상담</li>
+                    <li data-tab="knowledge"><i class="fas fa-book"></i> 지식 베이스</li>
+                    <li data-tab="agent"><i class="fas fa-robot"></i> 에이전트 채팅</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content-area">
+            <header class="main-header">
+                <h2 id="tab-title">실시간 상담 내역</h2>
+                <div class="status-indicator">
+                    <span class="dot"></span> System Online
+                </div>
+            </header>
+
+            <section id="chats-tab" class="tab-content active">
+                <div class="chat-list" id="chat-list">
+                    <!-- Chats will be loaded here -->
+                    <div class="loading">상담 내역을 불러오는 중...</div>
+                </div>
+                <div class="chat-detail" id="chat-detail">
+                    <div class="empty-state">대화방을 선택해주세요.</div>
+                </div>
+            </section>
+
+            <section id="knowledge-tab" class="tab-content">
+                <div class="kb-grid">
+                    <div class="kb-card">
+                        <h3><i class="fas fa-plus-circle"></i> QA 지식 추가</h3>
+                        <div class="form-group">
+                            <label>질문 (Question)</label>
+                            <textarea id="kb-q" placeholder="예: 배송비는 얼마인가요?"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>답변 (Answer)</label>
+                            <textarea id="kb-a" placeholder="예: 3,000원입니다. (5만원 이상 무료)"></textarea>
+                        </div>
+                        <button class="btn-primary" onclick="addManualKnowledge()">추가하기</button>
+                    </div>
+                    <div class="kb-card">
+                        <h3><i class="fas fa-link"></i> URL 학습</h3>
+                        <div class="form-group">
+                            <label>상품/공지 URL</label>
+                            <input type="text" id="kb-url" placeholder="https://smartstore.naver.com/...">
+                        </div>
+                        <button class="btn-secondary" onclick="addUrlKnowledge()">학습 시작</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="agent-tab" class="tab-content">
+                <div class="agent-chat-container">
+                    <div class="agent-messages" id="agent-messages">
+                        <div class="msg bot">안녕하세요! 돈쭐 에이전트입니다. 무엇을 도와드릴까요?</div>
+                    </div>
+                    <div class="agent-input">
+                        <input type="text" id="agent-query" placeholder="에이전트에게 질문해보세요..." onkeypress="if(event.keyCode==13) queryAgent()">
+                        <button onclick="queryAgent()"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

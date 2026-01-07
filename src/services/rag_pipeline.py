@@ -45,5 +45,7 @@ class RAGPipeline:
 
 if __name__ == "__main__":
     pipeline = RAGPipeline()
-    # print(pipeline.run("배송 기간이 얼마나 걸리나요?"))
-    pass
+    query = "제 전화번호를 마스킹했나요?"
+    print(f"\nUser Query: {query}")
+    answer = pipeline.run(query)
+    print(f"Agent Answer: {answer}")

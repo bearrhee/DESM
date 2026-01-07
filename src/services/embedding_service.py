@@ -6,12 +6,12 @@ load_dotenv()
 
 class EmbeddingService:
     def __init__(self):
-        self.api_key = os.getenv("OPENROUTER_API_KEY")
+        self.api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
         self.base_url = "https://openrouter.ai/api/v1"
         self.headers = {
             "Authorization": f"Bearer {self.api_key}",
-            "HTTP-Referer": os.getenv("HTTP_REFERER", "https://github.com/bear/deas"),
-            "X-Title": os.getenv("X_TITLE", "DEAS_Agent")
+            "HTTP-Referer": os.getenv("HTTP_REFERER", "https://github.com/bear/deas").strip(),
+            "X-Title": os.getenv("X_TITLE", "DEAS_Agent").strip()
         }
 
     def get_embedding(self, text: str, model: str = "text-embedding-3-small"):

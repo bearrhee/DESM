@@ -48,6 +48,8 @@ def run_upsert_pipeline(input_json: str):
     print("Upsert pipeline finished.")
 
 if __name__ == "__main__":
-    # raw_json = 'data/processed/talktalk_qa.json'
-    # run_upsert_pipeline(raw_json)
-    pass
+    raw_json = 'data/processed/talktalk_qa.json'
+    if os.path.exists(raw_json):
+        run_upsert_pipeline(raw_json)
+    else:
+        print(f"Error: Processed data not found at {raw_json}")

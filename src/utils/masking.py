@@ -7,23 +7,21 @@ def mask_pii(text: str) -> str:
     if not isinstance(text, str):
         return text
 
-    # 연락처/전화번호 (010, 02 등으로 시작하는 한국형 패턴)
-    phone_pattern = r'(?<!\d)(01[016789]|02|0[3-9][0-9])[-.\s]?(\d{3,4})[-.\s]?(\d{4})(?!\d)'
-    text = re.sub(phone_pattern, r'[PHONE]', text)
-
-    # 계좌번호 (가장 흔한 형태, 전화번호가 아닌 숫자-숫자-숫자 조합)
+    # 1. 계좌번호 (가장 흔한 형태, 세부 패턴이 다양하므로 전화번호보다 먼저 처리)
     account_pattern = r'(?<!\d)(\d{3,6})[-](\d{2,6})[-](\d{3,6})(?!\d)'
     text = re.sub(account_pattern, '[ACCOUNT]', text)
 
-    # 이메일 주소
+    # 2. 연락처/전화번호 (010, 02 등으로 시작하는 한국형 패턴)
+    phone_pattern = r'(?<!\d)(01[016789]|02|0[3-9][0-9])[-.\s]?(\d{3,4})[-.\s]?(\d{4})(?!\d)'
+    text = re.sub(phone_pattern, r'[PHONE]', text)
+
+    # 3. 이메일 주소
     email_pattern = r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}'
     text = re.sub(email_pattern, '[EMAIL]', text)
 
-    # 주소 (동/읍/면/가/로/길 등으로 끝나는 경우 - 단순화된 패턴)
-    # 실제 주소는 매우 다양하므로 NER(Named Entity Recognition)이 더 좋지만, 
-    # 요구사항에 맞게 정규표현식 기반으로 기본 구현
-    # address_pattern = r'([가-힣]+[시|도])?\s?([가-힣]+[구|군|시])?\s?([가-힣]+[동|읍|면|가|로|길])\s?(\d+)?'
-    # text = re.sub(address_pattern, '[ADDRESS]', text)
+    # 4. 주소 (기본적인 한국 주소 패턴 보완)
+    address_pattern = r'[가-힣]+([시|도])\s+[가-힣]+([구|군|시])\s+[가-힣\d]+([동|읍|면|가|로|길])'
+    text = re.sub(address_pattern, '[ADDRESS]', text)
 
     return text
 

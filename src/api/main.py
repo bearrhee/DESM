@@ -13,6 +13,12 @@ from src.services.embedding_service import EmbeddingService
 from src.services.pinecone_manager import PineconeManager
 import uuid
 import time
+from pathlib import Path
+
+# 파일 경로 안정성을 위해 프로젝트 루트 경로 설정
+ROOT_DIR = Path(__file__).parent.parent.parent
+DASHBOARD_DIR = ROOT_DIR / "dashboard"
+DATA_DIR = ROOT_DIR / "data"
 
 app = FastAPI(title="DEAS Admin API")
 
@@ -92,9 +98,10 @@ async def query_agent(item: QueryItem):
 # 정적 파일 서빙 (Dashboard)
 @app.get("/favicon.ico")
 async def favicon():
-    return FileResponse("dashboard/favicon.ico") if os.path.exists("dashboard/favicon.ico") else None
+    fav_path = DASHBOARD_DIR / "favicon.ico"
+    return FileResponse(fav_path) if fav_path.exists() else None
 
-app.mount("/", StaticFiles(directory="dashboard", html=True), name="static")
+app.mount("/", StaticFiles(directory=str(DASHBOARD_DIR), html=True), name="static")
 
 if __name__ == "__main__":
     import uvicorn

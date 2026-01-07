@@ -8,6 +8,9 @@ from googleapiclient.errors import HttpError
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
+# NOTE: For automated server environments, consider using a Service Account 
+# (google.oauth2.service_account.Credentials) instead of InstalledAppFlow.
+
 class GoogleSheetsService:
     def __init__(self, spreadsheet_id: str):
         self.spreadsheet_id = spreadsheet_id

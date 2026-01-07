@@ -38,5 +38,10 @@ def sync_sheets_to_pinecone(spreadsheet_id: str, range_name: str):
     run_upsert_pipeline('data/processed/sheet_knowledge.json')
 
 if __name__ == "__main__":
-    # sync_sheets_to_pinecone('YOUR_SPREADSHEET_ID', 'Sheet1!A1:B')
-    pass
+    from dotenv import load_dotenv
+    load_dotenv()
+    ss_id = os.getenv("SPREADSHEET_ID")
+    if ss_id:
+        sync_sheets_to_pinecone(ss_id, 'Sheet1!A1:B')
+    else:
+        print("SPREADSHEET_ID not set in .env")

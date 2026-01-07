@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DEAS Admin Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <div class="glass-bg"></div>
     <div class="app-container">
@@ -74,7 +78,8 @@
                         <div class="msg bot">안녕하세요! 돈쭐 에이전트입니다. 무엇을 도와드릴까요?</div>
                     </div>
                     <div class="agent-input">
-                        <input type="text" id="agent-query" placeholder="에이전트에게 질문해보세요..." onkeypress="if(event.keyCode==13) queryAgent()">
+                        <input type="text" id="agent-query" placeholder="에이전트에게 질문해보세요..."
+                            onkeypress="if(event.keyCode==13) queryAgent()">
                         <button onclick="queryAgent()"><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
@@ -83,4 +88,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

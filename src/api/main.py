@@ -90,8 +90,10 @@ async def query_agent(item: QueryItem):
         raise HTTPException(status_code=500, detail=str(e))
 
 # 정적 파일 서빙 (Dashboard)
-# / 경로로 요청이 들어오면 dashboard 디렉토리에서 파일을 찾습니다.
-# API 경로(/api) 외의 모든 경로는 정적 파일로 처리됩니다.
+@app.get("/favicon.ico")
+async def favicon():
+    return FileResponse("dashboard/favicon.ico") if os.path.exists("dashboard/favicon.ico") else None
+
 app.mount("/", StaticFiles(directory="dashboard", html=True), name="static")
 
 if __name__ == "__main__":

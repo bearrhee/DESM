@@ -38,9 +38,19 @@
             </header>
 
             <section id="chats-tab" class="tab-content active">
-                <div class="chat-list" id="chat-list">
-                    <!-- Chats will be loaded here -->
-                    <div class="loading">상담 내역을 불러오는 중...</div>
+                <div class="chat-sidebar">
+                    <div class="category-filter">
+                        <button class="active" onclick="filterCategory('전체')">전체</button>
+                        <button onclick="filterCategory('대기')">대기</button>
+                        <button onclick="filterCategory('진행중')">진행중</button>
+                        <button onclick="filterCategory('완료')">완료</button>
+                        <button onclick="filterCategory('보류')">보류</button>
+                        <button onclick="filterCategory('차단')">차단</button>
+                        <button onclick="filterCategory('스팸함')">스팸</button>
+                    </div>
+                    <div class="chat-list" id="chat-list">
+                        <div class="loading">상담 내역을 불러오는 중...</div>
+                    </div>
                 </div>
                 <div class="chat-detail" id="chat-detail">
                     <div class="empty-state">대화방을 선택해주세요.</div>

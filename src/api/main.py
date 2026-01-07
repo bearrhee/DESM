@@ -41,11 +41,11 @@ class QueryItem(BaseModel):
     query: str
 
 @app.get("/api/chats")
-async def get_chats():
-    """상담 내역을 가져옵니다."""
+async def get_chats(category: str = "전체"):
+    """상담 내역을 카테고리별로 가져옵니다."""
     tt_service = NaverTalkTalkService()
     try:
-        chats = tt_service.get_chat_list()
+        chats = tt_service.get_chat_list(category)
         for chat in chats:
             chat['messages'] = tt_service.get_messages(chat['chatId'])
         return chats

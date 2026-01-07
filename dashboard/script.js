@@ -18,15 +18,18 @@ document.querySelectorAll('.sidebar li').forEach(li => {
 });
 
 // Load Chats
-async function loadChats() {
+async function loadChats(category = "전체") {
     const listEl = document.getElementById('chat-list');
     try {
-        const res = await fetch(`${API_BASE}/chats`);
+        const res = await fetch(`${API_BASE}/chats?category=${encodeURIComponent(category)}`);
         const chats = await res.json();
 
         listEl.innerHTML = chats.map(chat => `
             <div class="chat-item" onclick="viewChat('${chat.chatId}')">
-                <h4>ID: ${chat.chatId}</h4>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px">
+                    <h4 style="margin: 0">ID: ${chat.chatId}</h4>
+                    <span class="badge" style="background: var(--glass); font-size: 0.7rem; padding: 2px 8px; border-radius: 10px">${chat.category}</span>
+                </div>
                 <p>User: ${chat.userId}</p>
                 <p>${chat.lastMessage}</p>
             </div>
@@ -35,6 +38,13 @@ async function loadChats() {
     } catch (err) {
         listEl.innerHTML = `<div class="error">로드 실패: ${err.message}</div>`;
     }
+}
+
+function filterCategory(category) {
+    document.querySelectorAll('.category-filter button').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText === category || (btn.innerText === '스팸' && category === '스팸함'));
+    });
+    loadChats(category);
 }
 
 async function viewChat(chatId) {

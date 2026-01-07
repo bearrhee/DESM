@@ -60,12 +60,31 @@ async function viewChat(chatId) {
             <h3>상담 상세: ${chat.chatId}</h3>
         </div>
         <div style="flex: 1; overflow-y: auto; padding: 2rem; display: flex; flex-direction: column">
-            ${chat.messages.map(m => `
-                <div class="chat-bubble ${m.sender}">
-                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px">${m.sender} | ${m.timestamp}</div>
-                    ${m.content}
-                </div>
-            `).join('')}
+            ${chat.messages.map(m => {
+        let content = m.content;
+        if (m.msg_type === 'image') {
+            content = `<img src="${m.media_url}" style="max-width: 100%; border-radius: 10px; margin-top: 5px;" alt="image">`;
+        } else if (m.msg_type === 'file') {
+            content = `<div class="file-link"><i class="fas fa-file"></i> <a href="${m.media_url}" target="_blank">${m.file_name || '파일 보기'}</a></div>`;
+        } else if (m.msg_type === 'composite') {
+            content = `
+                        <div class="composite-card">
+                            ${m.media_url ? `<img src="${m.media_url}" style="width: 100%; border-radius: 8px 8px 0 0">` : ''}
+                            <div style="padding: 10px">${m.content.replace(/\n/g, '<br>')}</div>
+                        </div>
+                    `;
+        } else {
+            // URL 자동 링크 처리
+            content = content.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+        }
+
+        return `
+                    <div class="chat-bubble ${m.sender}">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px">${m.sender} | ${m.timestamp}</div>
+                        ${content}
+                    </div>
+                `;
+    }).join('')}
         </div>
     `;
 }

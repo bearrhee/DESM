@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -94,6 +94,18 @@ async def query_agent(item: QueryItem):
         return {"answer": answer}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/webhook/talktalk")
+async def talktalk_webhook(request: Request):
+    """네이버 톡톡으로부터 Webhook 이벤트를 수신합니다."""
+    try:
+        event_data = await request.json()
+        tt_service = NaverTalkTalkService()
+        result = tt_service.handle_webhook(event_data)
+        return result
+    except Exception as e:
+        print(f"Webhook Error: {e}")
+        return {"status": "error", "message": str(e)}
 
 # 정적 파일 서빙 (Dashboard)
 @app.get("/favicon.ico")
